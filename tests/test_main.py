@@ -46,15 +46,18 @@ def movies_data(genres_data, actors_data):
     matrix.actors.add(2)
     matrix.genres.add(1)
 
-    matrix2 = Movie.objects.create(title="Matrix 2", description="Matrix 2 movie")
+    matrix2 = Movie.objects.create(title="Matrix 2",
+                                   description="Matrix 2 movie")
     matrix2.genres.add(1)
     matrix2.actors.add(2)
 
-    batman = Movie.objects.create(title="Batman", description="Batman movie")
+    batman = Movie.objects.create(title="Batman",
+                                  description="Batman movie")
     batman.genres.add(2)
     batman.actors.add(3)
 
-    titanic = Movie.objects.create(title="Titanic", description="Titanic movie")
+    titanic = Movie.objects.create(title="Titanic",
+                                   description="Titanic movie")
     titanic.genres.add(1, 2)
 
     good_bad = Movie.objects.create(
@@ -100,9 +103,9 @@ def movie_sessions_data(movies_data, cinema_halls_data):
 @pytest.fixture()
 def users_data():
     get_user_model().objects.create_user(username="user1",
-                                                 password="pass1234")
+                                         password="pass1234")
     get_user_model().objects.create_user(username="user2",
-                                                 password="pass1234")
+                                         password="pass1234")
 
 
 @pytest.fixture()
@@ -169,16 +172,12 @@ def test_movie_service_get_movies_with_title(movies_data):
 
 @pytestmark
 def test_movie_service_get_movies_with_full_data(movies_data):
-    assert list(
-        get_movies(genres_ids=[1, 2], actors_ids=[2, 3], title="matrix").values_list(
-            "title"
-        )
-    ) == [("Matrix",), ("Matrix 2",)]
-    assert list(
-        get_movies(genres_ids=[1, 2], actors_ids=[2, 3], title="batman").values_list(
-            "title"
-        )
-    ) == [("Batman",)]
+    assert list(get_movies(
+        genres_ids=[1, 2], actors_ids=[2, 3], title="matrix"
+    ).values_list("title")) == [("Matrix",), ("Matrix 2",)]
+    assert list(get_movies(
+        genres_ids=[1, 2], actors_ids=[2, 3], title="batman"
+    ).values_list("title")) == [("Batman",)]
 
 
 @pytestmark
@@ -207,13 +206,14 @@ def test_user_service_create_user():
         get_user_model()
         .objects.all()
         .values_list("username", "first_name", "last_name", "email")
-    ) == [("User1", "", "", ""), ("User2", "Johnny", "Depp", "j_depp@gmail.com")]
-    assert (
-        get_user_model().objects.get(username="User1").password != "Password1234"
-    ), "Password should be encrypted"
-    assert (
-        get_user_model().objects.get(username="User2").password != "Password5678"
-    ), "Password should be encrypted"
+    ) == [("User1", "", "", ""),
+          ("User2", "Johnny", "Depp", "j_depp@gmail.com")]
+    assert (get_user_model().objects.get(
+        username="User1"
+    ).password != "Password1234"), "Password should be encrypted"
+    assert (get_user_model().objects.get(
+        username="User2"
+    ).password != "Password5678"), "Password should be encrypted"
 
 
 @pytestmark
@@ -262,7 +262,9 @@ def test_user_service_update_user_with_password(users_data):
     ) == [
         ("user1", "", "", ""),
     ]
-    assert get_user_model().objects.get(id=1).check_password("new_password1234")
+    assert get_user_model().objects.get(id=1).check_password(
+        "new_password1234"
+    )
 
 
 @pytestmark
@@ -282,7 +284,9 @@ def test_user_service_update_user_with_whole_data(users_data):
     ) == [
         ("New_user1", "Johnny", "Depp", "user1_@gmail.com"),
     ]
-    assert get_user_model().objects.get(id=1).check_password("new_password1234")
+    assert get_user_model().objects.get(id=1).check_password(
+        "new_password1234"
+    )
 
 
 @pytestmark
@@ -296,7 +300,9 @@ def test_order_service_get_orders_without_user(orders_data):
 
 @pytestmark
 def test_order_service_get_orders_with_user(orders_data):
-    assert list(get_orders(username="user1").values_list("user__username")) == [
+    assert list(get_orders(username="user1").values_list(
+        "user__username"
+    )) == [
         ("user1",),
         ("user1",),
     ]
@@ -321,7 +327,9 @@ def incorrect_tickets():
 @pytest.fixture()
 def create_order_data():
     movie = Movie.objects.create(title="Speed", description="Description")
-    cinema_hall = CinemaHall.objects.create(name="Blue", rows=14, seats_in_row=12)
+    cinema_hall = CinemaHall.objects.create(name="Blue",
+                                            rows=14,
+                                            seats_in_row=12)
     MovieSession.objects.create(
         show_time=datetime.datetime.now(),
         movie=movie,
@@ -333,7 +341,9 @@ def create_order_data():
 @pytestmark
 def test_order_service_create_order_without_date(create_order_data, tickets):
     create_order(tickets=tickets, username="user_1")
-    assert list(Order.objects.all().values_list("user__username")) == [("user_1",)]
+    assert list(Order.objects.all().values_list(
+        "user__username"
+    )) == [("user_1",)]
     assert list(
         Ticket.objects.filter(movie_session=1).values_list(
             "row", "seat", "movie_session"
@@ -344,7 +354,9 @@ def test_order_service_create_order_without_date(create_order_data, tickets):
 @pytestmark
 def test_order_service_create_order_with_date(create_order_data, tickets):
     create_order(tickets=tickets, username="user_1", date="2020-11-10 14:40")
-    assert list(Order.objects.all().values_list("user__username")) == [("user_1",)]
+    assert list(Order.objects.all().values_list(
+        "user__username"
+    )) == [("user_1",)]
     assert list(
         Ticket.objects.filter(movie_session=1).values_list(
             "row", "seat", "movie_session"
