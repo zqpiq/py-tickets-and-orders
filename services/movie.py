@@ -17,10 +17,6 @@ def get_movie_by_id(movie_id: int):
     return Movie.objects.get(id=movie_id)
 
 
-def get_movies_by_title(title: str):
-    return Movie.objects.filter(title__icontains=title)
-
-
 def create_movie(movie_title: str,
                  movie_description: str,
                  genres_ids: list = None,

@@ -127,7 +127,6 @@ def test_auth_user_models():
     assert settings.AUTH_USER_MODEL == "db.User"
 
 
-@pytestmark
 def test_order_str(orders_data):
     order = Order.objects.get(id=1)
     assert str(order) == str(order.created_at)
@@ -135,26 +134,22 @@ def test_order_str(orders_data):
     assert str(order) == str(order.created_at)
 
 
-@pytestmark
 def test_order_ordering(orders_data):
     assert list(Order.objects.all().values_list("id")) == [(3,), (2,), (1,)]
 
 
-@pytestmark
 def test_ticket_str(tickets_data):
     assert str(
         Ticket.objects.first()
     ) == "Matrix 2019-08-19 17:30:00+00:00 (row: 7, seat: 10)"
 
 
-@pytestmark
 def test_ticket_unique_constraint(tickets_data):
     Ticket.objects.create(order_id=1, movie_session_id=1, row=9, seat=9)
     with pytest.raises(ValidationError):
         Ticket.objects.create(order_id=1, movie_session_id=1, row=9, seat=9)
 
 
-@pytestmark
 def test_movie_service_get_movies_with_title(movies_data):
     assert list(get_movies(title="harry").values_list("title")) == [
         ("Harry Potter 1",),
@@ -170,7 +165,6 @@ def test_movie_service_get_movies_with_title(movies_data):
     ]
 
 
-@pytestmark
 def test_movie_service_get_movies_with_full_data(movies_data):
     assert list(get_movies(
         genres_ids=[1, 2], actors_ids=[2, 3], title="matrix"
@@ -180,7 +174,6 @@ def test_movie_service_get_movies_with_full_data(movies_data):
     ).values_list("title")) == [("Batman",)]
 
 
-@pytestmark
 def test_movie_session_service_get_taken_seats(tickets_data):
     assert get_taken_seats(movie_session_id=1) == [
         {"row": 7, "seat": 10},
@@ -192,7 +185,6 @@ def test_movie_session_service_get_taken_seats(tickets_data):
     ]
 
 
-@pytestmark
 def test_user_service_create_user():
     create_user(username="User1", password="Password1234")
     create_user(
@@ -216,7 +208,6 @@ def test_user_service_create_user():
     ).password != "Password5678"), "Password should be encrypted"
 
 
-@pytestmark
 def test_user_service_get_user(users_data):
     user = get_user(user_id=1)
     assert user.username == "user1"
@@ -224,7 +215,6 @@ def test_user_service_get_user(users_data):
     assert user.username == "user2"
 
 
-@pytestmark
 def test_user_service_update_user_with_no_data(users_data):
     user1_password = get_user_model().objects.get(id=1).password
     update_user(user_id=1)
@@ -238,7 +228,6 @@ def test_user_service_update_user_with_no_data(users_data):
     assert get_user_model().objects.get(id=1).password == user1_password
 
 
-@pytestmark
 def test_user_service_update_user_with_email(users_data):
     user1_password = get_user_model().objects.get(id=1).password
     update_user(1, email="user1@gmail.com")
@@ -252,7 +241,6 @@ def test_user_service_update_user_with_email(users_data):
     assert get_user_model().objects.get(id=1).password == user1_password
 
 
-@pytestmark
 def test_user_service_update_user_with_password(users_data):
     update_user(1, password="new_password1234")
     assert list(
@@ -267,7 +255,6 @@ def test_user_service_update_user_with_password(users_data):
     )
 
 
-@pytestmark
 def test_user_service_update_user_with_whole_data(users_data):
     update_user(
         1,
@@ -289,7 +276,6 @@ def test_user_service_update_user_with_whole_data(users_data):
     )
 
 
-@pytestmark
 def test_order_service_get_orders_without_user(orders_data):
     assert list(get_orders().values_list("user__username")) == [
         ("user2",),
@@ -298,7 +284,6 @@ def test_order_service_get_orders_without_user(orders_data):
     ]
 
 
-@pytestmark
 def test_order_service_get_orders_with_user(orders_data):
     assert list(get_orders(username="user1").values_list(
         "user__username"
@@ -338,7 +323,6 @@ def create_order_data():
     get_user_model().objects.create_user(username="user_1")
 
 
-@pytestmark
 def test_order_service_create_order_without_date(create_order_data, tickets):
     create_order(tickets=tickets, username="user_1")
     assert list(Order.objects.all().values_list(
@@ -351,7 +335,6 @@ def test_order_service_create_order_without_date(create_order_data, tickets):
     ) == [(10, 8, 1), (10, 9, 1)]
 
 
-@pytestmark
 def test_order_service_create_order_with_date(create_order_data, tickets):
     create_order(tickets=tickets, username="user_1", date="2020-11-10 14:40")
     assert list(Order.objects.all().values_list(
@@ -367,7 +350,6 @@ def test_order_service_create_order_with_date(create_order_data, tickets):
     )
 
 
-@pytestmark
 def test_create_order_transaction_atomic(tickets):
     get_user_model().objects.create_user(username="user_1")
     with pytest.raises(Exception):
@@ -376,7 +358,6 @@ def test_create_order_transaction_atomic(tickets):
     assert Order.objects.all().count() == 0
 
 
-@pytestmark
 def test_ticket_clean_row_out_of_range(movie_sessions_data, orders_data):
     with pytest.raises(ValidationError) as e_info:
         Ticket.objects.create(movie_session_id=1, order_id=1, row=11, seat=5)
@@ -386,7 +367,6 @@ def test_ticket_clean_row_out_of_range(movie_sessions_data, orders_data):
     )
 
 
-@pytestmark
 def test_ticket_clean_seat_out_of_range(movie_sessions_data, orders_data):
     with pytest.raises(ValidationError) as e_info:
         Ticket.objects.create(movie_session_id=1, order_id=1, row=10, seat=13)
@@ -398,7 +378,6 @@ def test_ticket_clean_seat_out_of_range(movie_sessions_data, orders_data):
     )
 
 
-@pytestmark
 def test_create_movie_transaction_atomic(genres_data, actors_data):
     with pytest.raises(ValueError):
         create_movie(movie_title="New movie",
