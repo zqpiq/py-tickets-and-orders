@@ -110,9 +110,9 @@ def users_data():
 
 @pytest.fixture()
 def orders_data(users_data):
-    Order.objects.create(id=1, user_id=1, created_at="2022-06-06 10:00:00")
-    Order.objects.create(id=2, user_id=1, created_at="2022-06-07 10:00:00")
-    Order.objects.create(id=3, user_id=2, created_at="2022-06-08 10:00:00")
+    Order.objects.create(id=1, user_id=1)
+    Order.objects.create(id=2, user_id=1)
+    Order.objects.create(id=3, user_id=2)
 
 
 @pytest.fixture()
@@ -135,7 +135,11 @@ def test_order_str(orders_data):
 
 
 def test_order_ordering(orders_data):
-    assert list(Order.objects.all().values_list("id")) == [(3,), (2,), (1,)]
+    assert list(
+        Order.objects.all().values_list("id")
+    ) == list(
+        Order.objects.all().order_by("-created_at").values_list("id")
+    )
 
 
 def test_ticket_str(tickets_data):
