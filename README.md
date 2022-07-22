@@ -8,7 +8,7 @@ you have to create or edit tables:
     - index on field `title`.
 2. `Order`, with such fields:
     - datetime field `created_at`, the datetime when the order was created,
-set `auto_add_now` to fill this field automatically during the creation.
+set `auto_now_add` to fill this field automatically during the creation.
     - foreign key `user`, the user that created the order.
    
 There should be implemented the string representation of the order:
