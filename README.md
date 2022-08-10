@@ -76,6 +76,10 @@ Use the following command to load prepared data from fixture to test and debug y
   
 `python manage.py loaddata cinema_db_data.json`.
 
+- After loading data from fixture you can use following superuser (or create another one by yourself):
+  - Login: `admin.user`
+  - Password: `1qazcde3`
+
 In `services` you already have services you created earlier. Now
 you have to create or edit such services:
 1. Edit `movie.py`, edit function:
