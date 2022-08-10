@@ -72,6 +72,10 @@ the default user model with custom, edit `settings.py`, inside `INSTALLED_APPS`,
 add there two apps: `"django.contrib.auth"` and `"django.contrib.contenttypes"`, also
 add `AUTH_USER_MODEL` equals to `"db.User"`.
 
+Use the following command to load prepared data from fixture to test and debug your code:
+  
+`python manage.py loaddata cinema_db_data.json`.
+
 In `services` you already have services you created earlier. Now
 you have to create or edit such services:
 1. Edit `movie.py`, edit function:
