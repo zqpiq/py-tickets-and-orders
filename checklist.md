@@ -30,10 +30,10 @@ user = get_user_model().objects.create_user(
 )
 
 if first_condition:
-    # do something
+    # some actions
     user.save()
 if second_condition:
-    # do something
+    # some actions
     user.save()
 ```
 
