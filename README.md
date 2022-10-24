@@ -14,7 +14,7 @@ set `auto_now_add` to fill this field automatically during the creation.
 There should be implemented the string representation of the order:
 ```python
 print(Order.objects.first())
-<Order: 2022-03-15 15:59:50.009379+00:00>
+<Order: 2022-03-15 15:59:50>
 ```
 Orders should be ordered from the newest to the oldest by default.
 
@@ -28,7 +28,7 @@ There should be implemented the string representation of the ticket, show
 information about movie session, row and seat:
 ```python
 print(Ticket.objects.first())
-<Ticket: Speed 2020-11-11 09:30:00+00:00 (row: 6, seat: 12)>
+<Ticket: Speed 2020-11-11 09:30:00 (row: 6, seat: 12)>
 ```
 Ticket should implement method `clean()`. This method should check if 
 `row` and `seat` are correct and are not greater than values in 
