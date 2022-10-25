@@ -86,7 +86,6 @@ you have to create or edit such services:
    - `get_movies`, add optional argument `title`, if `title` is not `None`,
 function returns result as earlier, but also filter movies with title 
 that contains `title`.
-    - Edit `create_movie`, make it as transaction too.
 2. Create `user.py`, add such functions:
    - `create_user`, takes `username`, `password`, optional parameters 
 `email`, `first_name`, `last_name`. The method should save user properly (password 
@@ -133,5 +132,7 @@ tickets with that order and data provided in `tickets`.
    purpose use [transaction.atomic](https://docs.djangoproject.com/en/4.0/topics/db/transactions/).
    - `get_orders`, takes optional `username`, if `username` is provided, returns
 all orders for the user with the provided username, else returns all orders.
+5. Edit `movie.py`, edit function:
+    - Edit `create_movie`, make it as transaction too.
 
 ### Note: Check your code using this [checklist](checklist.md) before pushing your solution.
