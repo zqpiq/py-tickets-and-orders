@@ -38,7 +38,7 @@ be raised. You also should override method `save()` and add there
 save the ticket.
 
 Also fields `row`, `seat`, `movie_session` should be unique together. 
-Use `UniqueConstraint`, [constraints](https://django.fun/docs/django/en/4.0/ref/models/options/#constraints).
+Use `UniqueConstraint`, [constraints](https://medium.com/@timmerop/how-to-add-a-uniqueconstraint-concurrently-in-django-2043c4752ee6).
 ```python
 import datetime
 
