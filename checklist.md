@@ -128,8 +128,7 @@ def __init__(self,
              name: str,age: int) -> None:
 ```
 
-
-9. To improve the code's readability and maintainability, it’s better to use the previously created function
+8. To improve the code's readability and maintainability, it’s better to use the previously created function
 
  Good example:
 
