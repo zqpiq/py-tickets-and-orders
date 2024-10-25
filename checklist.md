@@ -93,7 +93,81 @@ User.objects.create_user(
     username=username, password=password
 )
 ```
+5. Always include `related_name` in relationships for better readability and maintainability
+
+Good example:
+```python
+class Ticket(models.Model):
+    order = models.ForeignKey(to=Order, on_delete=models.CASCADE, related_name='tickets')
+```
+
+Bad example:
+```python
+class Ticket(models.Model):
+    order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
+```
+
+6. Use the `@transaction.atomic` decorator instead of using `with transaction.atomic:` for better readability and to ensure the entire function executes within a single transaction context
+
+7. Place each argument on a new line, including `self`, with proper indentation and formatting
+ 
+Good example:
+
+```python
+def __init__(
+        self, 
+        name: str,
+        age: int
+) -> None:
+```
+
+Bad example:
+
+```python
+def __init__(self, 
+             name: str,age: int) -> None:
+```
+
+8. To improve the code's readability and maintainability, it’s better to use the previously created function
+
+ Good example:
+
+```python
+def get_user(user_id: int) -> User:
+    return get_user_model().objects.get(pk=user_id)
+
+def update_user(user_id: int) -> User:
+    user = get_user(user_id)
+```
+
+ Bad example:
+
+```python
+def get_user(user_id: int) -> User:
+    return get_user_model().objects.get(pk=user_id)
+
+def update_user(user_id: int) -> User:
+    user = get_user_model().objects.get(pk=user_id)
+```
+
+9. If there’s no additional formatting or variables to include in the string, using an `f-string` is unnecessary. 
+
+10. To improve code clarity, it’s best to specify the type of `QuerySet` returned in the type annotations.
+
+Good example:
+
+```python
+def get_orders(username: str = None) -> QuerySet[Order]:
+    return Order.objects.all()
+```
+
+ Bad example:
+
+```python
+def get_orders(username: str = None) -> QuerySet:
+    return Order.objects.all()
+```
 
 ## Clean Code
-Add comments, prints, and functions to check your solution when you write your code. 
-Don't forget to delete them when you are ready to commit and push your code.
+
+1. To maintain clarity and organization, please avoid adding comments directly in the repository code.
