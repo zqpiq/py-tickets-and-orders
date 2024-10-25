@@ -169,4 +169,5 @@ def get_orders(username: str = None) -> QuerySet:
 ```
 
 ## Clean Code
-Avoid adding comments directly in the repository code.
+
+1. To maintain clarity and organization, please avoid adding comments directly in the repository code.
