@@ -106,6 +106,7 @@ Bad example:
 class Ticket(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
 ```
+
 6. Use the `@transaction.atomic` decorator instead of using `with transaction.atomic:` for better readability and to ensure the entire function executes within a single transaction context
 
 7. Place each argument on a new line, including `self`, with proper indentation and formatting
