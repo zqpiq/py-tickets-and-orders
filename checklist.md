@@ -152,6 +152,7 @@ def update_user(user_id: int) -> User:
 ```
 
 9. If there’s no additional formatting or variables to include in the string, using an `f-string` is unnecessary. 
+
 10. To improve code clarity, it’s best to specify the type of `QuerySet` returned in the type annotations.
 
 Good example:
