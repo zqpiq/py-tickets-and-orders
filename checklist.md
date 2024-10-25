@@ -120,6 +120,7 @@ def __init__(
         age: int
 ) -> None:
 ```
+
 Bad example:
 
 ```python
